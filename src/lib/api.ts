@@ -16,14 +16,14 @@ async function fetchData(endpoint: string, queryParams: Record<string, any> = {}
     return data;
 }
   
-export async function getTopArtists(limit: number = 50): Promise<any> {
+export async function fetchTopArtists(limit: number = 50): Promise<any> {
     return fetchData(`/api/v1/top-artists`, { limit });
 }
 
-export async function getTopTracks(limit: number = 50): Promise<any> {
+export async function fetchTopTracks(limit: number = 50): Promise<any> {
     return fetchData(`/api/v1/top-tracks`, { limit });
 }
 
-export async function getPlays(startDate: string, endDate: string): Promise<any> {
+export async function fetchPlays(startDate: string, endDate: string): Promise<any> {
     return fetchData(`/api/v1/plays`, { start_date: startDate, end_date: endDate });
 }

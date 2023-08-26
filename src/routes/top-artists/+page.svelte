@@ -1,6 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { getTopArtists } from '$lib/api';
+    import { fetchTopArtists } from '$lib/api';
 
     interface Artist {
         _id: string;
@@ -10,20 +10,19 @@
         genres: string[];
     }
 
-    export let artists: Artist[] | undefined;
+    export let artistsPromise: Promise<Artist[]> = fetchTopArtists();
 
-    onMount(async () => {
-        artists = await getTopArtists();
-    });
+    // onMount(async () => {
+    //     artistsPromise = fetchTopArtists();
+    // });
 
 </script>
 
 <h1>Artists</h1>
 
-{#if artists}
+{#await artistsPromise then artists}
     {#each artists as artist}
         <p>{artist}</p>
     {/each}
-{:else}
-    <p>Loading...</p>
-{/if}
+{/await}
+
