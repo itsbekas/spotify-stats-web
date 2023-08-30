@@ -1,27 +1,35 @@
-<script>
+<script lang="ts">
     import { onMount } from 'svelte';
-    import { getPlays } from '$lib/api';
+    import { fetchPlays } from '$lib/api';
+    import { page } from '$app/stores'
 
-    export let plays;
-    export let error;
+    interface Play {
+        _id: string;
+        track: string;
+        timestamp: string;
+    }
+
+    export let plays: Play[] = [];
 
     onMount(async () => {
-        try {
-            plays = await getPlays("1970-01-01", "2024-01-01");
-            error = null;
-        } catch (err) {
-            error = err.message || 'An error occurred.';
-        }
+
+        const start_date = $page.url.searchParams.get('start_date')
+        const end_date = $page.url.searchParams.get('end_date')
+        const limit = $page.url.searchParams.get('limit')
+
+        plays = await fetchPlays(start_date ? start_date : "1970-01-01",
+                                end_date ? end_date : "2070-01-01",
+                                limit ? parseInt(limit) : 50);
+        
     });
+
 </script>
 
 <h1>Plays</h1>
 
-{#if error}
-    <p>Error: {error}</p>
-{:else if plays}
-    {#each plays as play}
-        <p>{play.name}</p>
+{#if plays.length > 0}
+    {#each plays as play, index}
+        <p>{index+1 + ". " + play.track + " (" + play.timestamp + ")"}</p>
     {/each}
 {:else}
     <p>Loading...</p>

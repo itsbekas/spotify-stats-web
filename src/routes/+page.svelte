@@ -1,2 +1,3 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<a href="/top-artists"><h1>Top Artists</h1></a>
+<a href="/top-tracks"><h1>Top Tracks</h1></a>
+<a href="/plays"><h1>Plays</h1></a>

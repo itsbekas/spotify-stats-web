@@ -1,9 +1,9 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { fetchTopArtists } from '$lib/api';
+    import { fetchTopTracks } from '$lib/api';
     import { page } from '$app/stores'
 
-    interface Artist {
+    interface Track {
         _id: string;
         name: string;
         popularity: number;
@@ -11,25 +11,24 @@
         genres: string[];
     }
 
-    export let artists: Artist[] = [];
+    export let tracks: Track[] = [];
 
     onMount(async () => {
 
         const limit = $page.url.searchParams.get('limit')
-
-        artists = await fetchTopArtists(limit ? parseInt(limit) : 50);
         
+        tracks = await fetchTopTracks(limit ? parseInt(limit) : 50);
+
     });
 
 </script>
 
-<h1>Artists</h1>
+<h1>Tracks</h1>
 
-{#if artists.length > 0}
-    {#each artists as artist, index}
-        <p>{index+1 + ". " + artist.name + " (" + artist.play_count + " plays)"}</p>
+{#if tracks.length > 0}
+    {#each tracks as track, index}
+        <p>{index+1 + ". " + track.name + " (" + track.play_count + " plays)"}</p>
     {/each}
 {:else}
     <p>Loading...</p>
 {/if}
-

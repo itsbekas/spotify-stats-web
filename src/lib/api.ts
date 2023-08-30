@@ -24,6 +24,6 @@ export async function fetchTopTracks(limit: number = 50): Promise<any> {
     return fetchData(`/api/v1/top-tracks`, { limit });
 }
 
-export async function fetchPlays(startDate: string, endDate: string): Promise<any> {
+export async function fetchPlays(startDate: string, endDate: string, limit = 50): Promise<any> {
     return fetchData(`/api/v1/plays`, { start_date: startDate, end_date: endDate });
 }
